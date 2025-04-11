@@ -22,6 +22,10 @@ final readonly class AutomaticallyEagerLoadRelationships implements Configurable
      */
     public function configure(): void
     {
+        if (! method_exists(Model::class, 'automaticallyEagerLoadRelationships')) {
+            return;
+        }
+
         Model::automaticallyEagerLoadRelationships();
     }
 }
