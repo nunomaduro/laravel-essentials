@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "laravel/pint": "^1.22.0",
-        "orchestra/testbench": "^10.2",
+        "orchestra/testbench": "^9.13",
         "pestphp/pest": "^3.8.1",
         "pestphp/pest-plugin-type-coverage": "^3.5",
         "phpstan/phpstan": "^2.1.11",
