@@ -42,13 +42,13 @@ jobs:
     - name: Install Composer dependencies
       run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
 
-    - name: Require correct Testbench version
-      run: |
-        if [[ "${{ matrix.laravel }}" == 11* ]]; then
-          composer require --dev orchestra/testbench:^9.0 --no-interaction --with-all-dependencies
-        elif [[ "${{ matrix.laravel }}" == 12* ]]; then
-          composer require --dev orchestra/testbench:^10.0 --no-interaction --with-all-dependencies
-        fi
+    - name: Require Testbench v9 for Laravel 11
+      if: startsWith(matrix.laravel, '11')
+      run: composer require --dev orchestra/testbench:^9.0 --no-interaction --with-all-dependencies
+
+    - name: Require Testbench v10 for Laravel 12
+      if: startsWith(matrix.laravel, '12')
+      run: composer require --dev orchestra/testbench:^10.0 --no-interaction --with-all-dependencies
 
     - name: Install Laravel
       run: composer require laravel/framework:${{ matrix.laravel }} --with-all-dependencies --no-interaction --prefer-dist
