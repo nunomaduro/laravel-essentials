@@ -36,5 +36,8 @@ final class EssentialsServiceProvider extends BaseServiceProvider
             ->map(fn (string $configurable) => $this->app->make($configurable))
             ->filter(fn (Configurable $configurable): bool => $configurable->enabled())
             ->each(fn (Configurable $configurable) => $configurable->configure());
+        $this->publishes([
+            __DIR__.'stubs/rector.stub' => $this->app->basePath('rector.php'),
+        ]);
     }
 }
