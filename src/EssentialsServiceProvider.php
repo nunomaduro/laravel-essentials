@@ -18,8 +18,13 @@ final class EssentialsServiceProvider extends BaseServiceProvider
      * @var list<class-string<Configurable>>
      */
     private array $configurables = [
+        Configurables\AggressivePrefetching::class,
+        Configurables\AutomaticallyEagerLoadRelationships::class,
+        Configurables\ForceScheme::class,
         Configurables\ImmutableDates::class,
         Configurables\ProhibitDestructiveCommands::class,
+        Configurables\ShouldBeStrict::class,
+        Configurables\Unguard::class,
     ];
 
     /**

@@ -6,6 +6,8 @@ Essentials provides **better defaults** for your Laravel applications, including
 
 > **Requires [PHP 8.3+](https://php.net/releases/)**, **[Laravel 11+](https://laravel.com/docs/11.x/)**.
 
+> **Note:** This package is a **work in progress**, and it modifies the default behavior of Laravel. It is recommended to use it in new projects or when you are comfortable with the changes it introduces.
+
 ⚡️ Get started by requiring the package using [Composer](https://getcomposer.org):
 
 ```bash
