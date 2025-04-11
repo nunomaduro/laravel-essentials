@@ -8,11 +8,12 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        php: ['8.3']
+        os: [ubuntu-latest]
+        php: ['8.3', '8.4']
+        laravel: ['11', '12']
         dependency-version: [prefer-lowest, prefer-stable]
 
-    name: Tests P${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
+    name: Tests P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
 
     steps:
 
@@ -40,6 +41,9 @@ jobs:
 
     - name: Install Composer dependencies
       run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
+
+    - name: Install Laravel
+      run: composer require laravel/framework:${{ matrix.laravel }}
 
     - name: Integration Tests
       run: php ./vendor/bin/pest
