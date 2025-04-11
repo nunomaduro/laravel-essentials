@@ -10,7 +10,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         php: ['8.3', '8.4']
-        laravel: [^11.44.2, '^12.3.0']
+        laravel: [11.44.2, '12.8.1']
         dependency-version: [prefer-lowest, prefer-stable]
 
     name: Tests P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
@@ -41,6 +41,14 @@ jobs:
 
     - name: Install Composer dependencies
       run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
+
+    - name: Require correct Testbench version
+      run: |
+        if [[ "${{ matrix.laravel }}" == 11* ]]; then
+          composer require --dev orchestra/testbench:^9.0 --no-interaction --with-all-dependencies
+        elif [[ "${{ matrix.laravel }}" == 12* ]]; then
+          composer require --dev orchestra/testbench:^10.0 --no-interaction --with-all-dependencies
+        fi
 
     - name: Install Laravel
       run: composer require laravel/framework:${{ matrix.laravel }} --with-all-dependencies --no-interaction --prefer-dist
