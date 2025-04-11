@@ -14,7 +14,7 @@ final readonly class ProhibitDestructiveCommands implements Configurable
      */
     public function enabled(): bool
     {
-        return config()->boolean('essentials.prohibit-destructive-commands.enabled', true);
+        return config()->boolean(sprintf('essentials.%s', self::class), true);
     }
 
     /**

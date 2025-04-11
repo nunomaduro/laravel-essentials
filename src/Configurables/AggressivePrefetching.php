@@ -14,7 +14,7 @@ final readonly class AggressivePrefetching implements Configurable
      */
     public function enabled(): bool
     {
-        return config()->boolean('essentials.aggressive-prefetching.enabled', true);
+        return config()->boolean(sprintf('essentials.%s', self::class), true);
     }
 
     /**

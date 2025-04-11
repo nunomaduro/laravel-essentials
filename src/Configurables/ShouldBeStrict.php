@@ -14,7 +14,7 @@ final readonly class ShouldBeStrict implements Configurable
      */
     public function enabled(): bool
     {
-        return config()->boolean('essentials.should-be-strict.enabled', true);
+        return config()->boolean(sprintf('essentials.%s', self::class), true);
     }
 
     /**

@@ -14,7 +14,7 @@ final readonly class ForceScheme implements Configurable
      */
     public function enabled(): bool
     {
-        return config()->boolean('essentials.force-scheme.enabled', true);
+        return config()->boolean(sprintf('essentials.%s', self::class), true);
     }
 
     /**

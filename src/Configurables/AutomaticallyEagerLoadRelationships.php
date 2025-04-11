@@ -14,7 +14,7 @@ final readonly class AutomaticallyEagerLoadRelationships implements Configurable
      */
     public function enabled(): bool
     {
-        return config()->boolean('essentials.automatically-eager-load-relationships.enabled', true);
+        return config()->boolean(sprintf('essentials.%s', self::class), true);
     }
 
     /**
