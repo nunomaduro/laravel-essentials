@@ -12,7 +12,7 @@ composer require nunomaduro/essentials:@dev
 
 Done:
 
-- Models: unguarded, strict, automatically eager loaded relationships.
+- Models: strict, automatically eager loaded relationships.
 - Dates: immutable, strict.
 - Commands: prohibit destructive commands in production.
 - And force https URLs, aggresive prefeching on vite, and much more...
