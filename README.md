@@ -1,4 +1,4 @@
-Essentials provides **better defaults** for your Laravel applications, including:
+Essentials provides **better defaults** for your Laravel applications including: strict models, automatically eager loaded relationships, immutable dates, and more! 
 
 > **Requires [PHP 8.3+](https://php.net/releases/)**, **[Laravel 11+](https://laravel.com/docs/11.x/)**.
 
