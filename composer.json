@@ -1,7 +1,7 @@
 {
-    "name": "nunomaduro/skeleton-php",
-    "description": "A skeleton repository for my packages",
-    "keywords": ["php", "skeleton", "package"],
+    "name": "nunomaduro/essentials",
+    "description": "Just better defaults for your Laravel projects.",
+    "keywords": ["php", "laravel", "package", "essentials", "laravel-essentials"],
     "license": "MIT",
     "authors": [
         {
@@ -10,19 +10,21 @@
         }
     ],
     "require": {
-        "php": "^8.3.0"
+        "php": "^8.3.0",
+        "laravel/framework": "^11.44.2|^12.8.1"
     },
     "require-dev": {
-        "laravel/pint": "^1.18.1",
-        "pestphp/pest": "^3.5.1",
-        "pestphp/pest-plugin-type-coverage": "^3.1",
-        "phpstan/phpstan": "^1.12.7",
-        "rector/rector": "^1.2.8",
-        "symfony/var-dumper": "^7.1.6"
+        "laravel/pint": "^1.22.0",
+        "orchestra/testbench": "^10.2",
+        "pestphp/pest": "^3.8.1",
+        "pestphp/pest-plugin-type-coverage": "^3.5",
+        "phpstan/phpstan": "^2.1.11",
+        "rector/rector": "^2.0.11",
+        "symfony/var-dumper": "^7.2.3"
     },
     "autoload": {
         "psr-4": {
-            "NunoMaduro\\SkeletonPhp\\": "src/"
+            "NunoMaduro\\Essentials\\": "src/"
         }
     },
     "autoload-dev": {
@@ -45,12 +47,19 @@
         "test:refacto": "rector --dry-run",
         "test:lint": "pint --test",
         "test:types": "phpstan analyse --ansi",
-        "test:unit": "pest --colors=always --coverage --parallel --min=100",
+        "test:unit": "pest --colors=always --coverage --parallel",
         "test": [
             "@test:refacto",
             "@test:lint",
             "@test:types",
             "@test:unit"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NunoMaduro\\Essentials\\EssentialsServiceProvider"
+            ]
+        }
     }
 }
