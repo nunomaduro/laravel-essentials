@@ -43,7 +43,7 @@ jobs:
       run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
 
     - name: Install Laravel
-      run: composer require laravel/framework:${{ matrix.laravel }}
+      run: composer require laravel/framework:${{ matrix.laravel }} --update-with-dependencies --no-interaction --prefer-dist
 
     - name: Integration Tests
       run: php ./vendor/bin/pest
