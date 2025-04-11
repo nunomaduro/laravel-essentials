@@ -15,7 +15,7 @@ final readonly class ImmutableDates implements Configurable
      */
     public function enabled(): bool
     {
-        return config()->boolean('essentials.immutable-dates.enabled', true);
+        return config()->boolean(sprintf('essentials.%s', self::class), true);
     }
 
     /**

@@ -14,7 +14,7 @@ final readonly class Unguard implements Configurable
      */
     public function enabled(): bool
     {
-        return config()->boolean('essentials.unguard.enabled', false);
+        return config()->boolean(sprintf('essentials.%s', self::class), false);
     }
 
     /**
