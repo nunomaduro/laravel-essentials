@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 407 64">
       <style>
-            .essentials { fill: #1B1B18 } @media (prefers-color-scheme:dark) { .laravel { fill: #fff } }
+            .essentials { fill: #1B1B18 } @media (prefers-color-scheme:dark) { .essentials { fill: #fff } }
       </style>
 
       <rect fill="#F58D32" y="0" width="64" height="64"/>
