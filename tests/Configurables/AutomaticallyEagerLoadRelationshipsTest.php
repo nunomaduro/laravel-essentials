@@ -3,11 +3,12 @@
 use Illuminate\Database\Eloquent\Model;
 use NunoMaduro\Essentials\Configurables\AutomaticallyEagerLoadRelationships;
 
-beforeEach(function (): void {
-    Model::automaticallyEagerLoadRelationships(false);
-})->skip(fn (): bool => ! method_exists(Model::class, 'automaticallyEagerLoadRelationships'));
+beforeEach()
+    ->skip(fn (): bool => ! method_exists(Model::class, 'automaticallyEagerLoadRelationships'));
 
 it('enables automatic eager loading', function (): void {
+    Model::automaticallyEagerLoadRelationships(false);
+
     $eagerLoad = new AutomaticallyEagerLoadRelationships;
     $eagerLoad->configure();
 
