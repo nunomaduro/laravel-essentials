@@ -4,7 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 use NunoMaduro\Essentials\Configurables\AutomaticallyEagerLoadRelationships;
 
 beforeEach()
-    ->skip(fn (): bool => ! method_exists(Model::class, 'automaticallyEagerLoadRelationships'));
+    ->skip(fn (): bool => ! method_exists(Model::class, 'automaticallyEagerLoadRelationships'),
+        'Automatically eager loading relationships is not supported in this version of Laravel.');
 
 it('enables automatic eager loading', function (): void {
     Model::automaticallyEagerLoadRelationships(false);

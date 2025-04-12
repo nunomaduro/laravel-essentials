@@ -16,7 +16,8 @@ it('sets default password rules', function (): void {
     expect($passwordRules['min'])->toBe(12)
         ->and($passwordRules['max'])->toBe(255)
         ->and($passwordRules['uncompromised'])->toBeTrue();
-});
+})->skip(fn(): bool => method_exists(Password::class, 'appliedRules') === false,
+    'The appliedRules method is not available in this version of Laravel.');
 
 it('is enabled by default', function (): void {
     $setDefaultPassword = new SetDefaultPassword;
