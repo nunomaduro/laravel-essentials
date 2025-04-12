@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\App;
 use Illuminate\Validation\Rules\Password;
 use NunoMaduro\Essentials\Configurables\SetDefaultPassword;
 
