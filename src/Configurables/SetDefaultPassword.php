@@ -12,7 +12,7 @@ class SetDefaultPassword implements Configurable
      */
     public function enabled(): bool
     {
-        return config()->boolean(sprintf('essentials.%s', self::class), false);
+        return config()->boolean(sprintf('essentials.%s', self::class), true);
     }
 
     /**
@@ -20,20 +20,6 @@ class SetDefaultPassword implements Configurable
      */
     public function configure(): void
     {
-        Password::defaults(
-            fn (): ?Password => app()->isProduction()
-                ? $this->passwordDefaults()
-                : null
-        );
-    }
-
-    private function passwordDefaults(): Password
-    {
-        return Password::min(8)
-            // ->letters()
-            // ->mixedCase()
-            // ->numbers()
-            // ->symbols()
-            ->uncompromised();
+        Password::defaults(fn (): ?Password => app()->isProduction() ? Password::min(12)->max(255)->uncompromised() : null);
     }
 }
