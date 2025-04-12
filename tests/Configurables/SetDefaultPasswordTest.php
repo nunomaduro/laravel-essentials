@@ -8,16 +8,13 @@ beforeEach(function (): void {
     Password::defaults(null);
 });
 
-it('sets default password rules in production', function (): void {
-    App::shouldReceive('isProduction')->once()->andReturn(true);
-
+it('sets default password rules', function (): void {
     $setDefaultPassword = new SetDefaultPassword;
     $setDefaultPassword->configure();
 
     $passwordRules = Password::default()->appliedRules();
 
-    expect($passwordRules)->toBeInstanceOf(Password::class)
-        ->and($passwordRules['min'])->toBe(12)
+    expect($passwordRules['min'])->toBe(12)
         ->and($passwordRules['max'])->toBe(255)
         ->and($passwordRules['uncompromised'])->toBeTrue();
 });
