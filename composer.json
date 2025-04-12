@@ -42,14 +42,14 @@
         }
     },
     "scripts": {
-        "refacto": "rector",
+        "refactor": "rector",
         "lint": "pint",
-        "test:refacto": "rector --dry-run",
+        "test:refactor": "rector --dry-run",
         "test:lint": "pint --test",
         "test:types": "phpstan analyse --ansi",
         "test:unit": "pest --colors=always --coverage --parallel",
         "test": [
-            "@test:refacto",
+            "@test:refactor",
             "@test:lint",
             "@test:types",
             "@test:unit"
