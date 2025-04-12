@@ -25,60 +25,65 @@ composer require nunomaduro/essentials:@dev
 
 ## Features
 
-Essentials provides a set of configurable features that enhance your Laravel application with better defaults. Each feature can be enabled or disabled individually through configuration.
+All features are optional and configurable in `config/essentials.php`.
 
-### Model Enhancements
+### ✅ Strict Models
 
-#### Strict Mode (`ShouldBeStrict`)
+Improves how Eloquent handles undefined attributes, lazy loading, and invalid assignments.
 
-* **Rationale**: Laravel's Eloquent models are very permissive by default, allowing undefined attributes, silent attribute discarding, and lazy loading in contexts where it might cause performance issues.
-* **What it does**: Enables strict mode for Eloquent models, which:
-    - Prevents accessing missing attributes (throws exceptions instead of returning null)
-    - Prevents lazy loading (forces you to explicitly load relationships)
-    - Prevents silently discarding attributes (throws exceptions when setting attributes that don't exist)
-* **Benefits**: Catches potential bugs early, improves performance by preventing N+1 query issues, and makes your code more explicit and predictable.
+- Accessing a missing attribute throws an error.
+- Lazy loading is blocked unless explicitly allowed.
+- Setting undefined attributes throws instead of failing silently.
 
-#### Automatic Eager Loading (`AutomaticallyEagerLoadRelationships`)
+**Why:** Avoids subtle bugs and makes model behavior easier to reason about.
 
-* **Rationale**: N+1 query problems are one of the most common performance issues in Laravel applications.
-* **What it does**: Automatically eager loads relationships defined in your model's `$with` property, eliminating the need to manually call `with()` in your queries.
-* **Benefits**: Reduces database queries, improves application performance, and helps prevent N+1 query issues without requiring manual intervention.
+---
 
-#### Unguarded Models (`Unguard`)
+### ⚡️ Auto Eager Loading
 
-* **Rationale**: Laravel's mass assignment protection is important for security, but in controlled environments or during development, it can sometimes be cumbersome.
-* **What it does**: Disables mass assignment protection for all models, allowing you to create and update models without explicitly defining which attributes are fillable.
-* **Benefits**: Simplifies development workflow and reduces boilerplate code. Note that this is disabled by default and should only be enabled in controlled environments.
+Automatically eager loads relationships defined in the model’s `$with` property.
 
-### Date Handling
+**Why:** Reduces N+1 query issues and improves performance without needing `with()` everywhere.
 
-#### Immutable Dates (`ImmutableDates`)
+---
 
-* **Rationale**: Mutable dates can lead to unexpected bugs when date objects are modified after being passed around in your application.
-* **What it does**: Configures Laravel to use Carbon Immutable for all date handling, ensuring that date objects cannot be modified after creation.
-* **Benefits**: Prevents unexpected side effects from date mutations, makes date handling more predictable, and encourages a more functional programming style.
+### 🔓 Optional Unguarded Models
 
-### Security Enhancements
+Disables Laravel’s mass assignment protection globally (opt-in).
 
-#### Force HTTPS (`ForceScheme`)
+**Why:** Useful in trusted or local environments where you want to skip defining `$fillable`.
 
-* **Rationale**: HTTPS is essential for secure web applications, but Laravel doesn't force HTTPS by default.
-* **What it does**: Forces all generated URLs to use HTTPS, ensuring that your application's links are always secure.
-* **Benefits**: Improves security, prevents mixed content warnings, and ensures a consistent experience for users.
+---
 
-#### Prohibit Destructive Commands (`ProhibitDestructiveCommands`)
+### 🕒 Immutable Dates
 
-* **Rationale**: Accidentally running destructive commands (like migrations:fresh) in production can be catastrophic.
-* **What it does**: Prevents destructive commands from running in production environments, adding an extra layer of protection against accidental data loss.
-* **Benefits**: Reduces the risk of accidental data loss in production environments and provides peace of mind when running commands.
+Uses `CarbonImmutable` instead of mutable date objects across your app.
 
-### Frontend Optimizations
+**Why:** Prevents unexpected date mutations and improves predictability.
 
-#### Aggressive Prefetching (`AggressivePrefetching`)
+---
 
-* **Rationale**: Modern web applications often require multiple JavaScript and CSS files, which can slow down page loads if not optimized.
-* **What it does**: Configures Laravel Vite to use aggressive prefetching for assets, which preloads resources before they're needed.
-* **Benefits**: Improves perceived performance, reduces load times for subsequent page visits, and enhances the overall user experience.
+### 🔒 Force HTTPS
+
+Forces all generated URLs to use `https://`.
+
+**Why:** Ensures all traffic uses secure connections by default.
+
+---
+
+### 🛑 Safe Console
+
+Blocks potentially destructive Artisan commands in production (e.g., `migrate:fresh`).
+
+**Why:** Prevents accidental data loss and adds a safety net in sensitive environments.
+
+---
+
+### 🚀 Asset Prefetching
+
+Configures Laravel Vite to preload assets more aggressively.
+
+**Why:** Improves front-end load times and user experience.
 
 ## Configuration
 
