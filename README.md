@@ -85,6 +85,22 @@ Configures Laravel Vite to preload assets more aggressively.
 
 **Why:** Improves front-end load times and user experience.
 
+---
+
+### 🔄 Prevent Stray Requests
+
+Configures Laravel Http Facade to prevent stray requests.
+
+**Why:** Ensure every HTTP calls during tests have been explicitly faked.
+
+---
+
+### 😴 Fake Sleep
+
+Configures Laravel Sleep Facade to be faked.
+
+**Why:** Avoid unexpected sleep during testing cases.
+
 ## Configuration
 
 All features are configurable through the `essentials.php` config file. By default, most features are enabled, but you can disable any feature by setting its configuration value to `false`:
