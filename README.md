@@ -98,6 +98,30 @@ return [
 ];
 ```
 
+## Commands
+
+You can run the following command to publish opinionated configuration files for the specified tools:
+
+### Laravel Pint
+
+Laravel Pint is included by default in every Laravel project and is a great tool to keep your code clean and consistent. But it is configured very minimally by default. This command will publish a configuration file for Pint that includes the following:
+
+- "declare_strict_types" - Enforces strict types in all files.
+- "final_class" - Enforces final classes by default.
+- "ordered_class_elements" - Orders class elements by visibility and type.
+- "strict_comparison" - Enforces strict comparison in all files.
+- and more...
+
+```bash
+php artisan essentials:pint {--force} {--backup}
+```
+
+*Options:*
+- `--force` - Overwrites the existing configuration file without asking for confirmation.
+- `--backup` - Creates a backup of the existing configuration file.
+
+
+
 ## Roadmap
 
 - Better defaults before each test case, like: freeze time, prevent HTTP requests, etc.
