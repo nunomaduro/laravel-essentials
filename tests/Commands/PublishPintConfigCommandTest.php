@@ -15,7 +15,7 @@ beforeEach(function (): void {
 });
 
 it('publishes pint configuration file', function (): void {
-    $command = new PublishPintConfigCommand();
+    $command = new PublishPintConfigCommand;
 
     $this->artisan('essentials:pint', ['--force' => true])
         ->assertExitCode(0)
