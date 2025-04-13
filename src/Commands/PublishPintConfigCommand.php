@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\Essentials\Commands;
 
 use Illuminate\Console\Command;
 
-class PublishPintConfigCommand extends Command
+final class PublishPintConfigCommand extends Command
 {
     protected $signature = 'essentials:pint
         {--force : Force the operation to run without confirmation}
@@ -31,12 +33,6 @@ class PublishPintConfigCommand extends Command
             if ($this->option('backup')) {
                 copy($destination_path, $destination_path.'.backup');
                 $this->info('Backup created at: '.$destination_path.'.backup');
-            }
-
-            if (! $this->option('force')) {
-                $this->warn('Pint configuration file already exists!');
-
-                return 1;
             }
         }
 
