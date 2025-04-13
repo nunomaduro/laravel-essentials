@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Sleep;
 use NunoMaduro\Essentials\Configurables\FakeSleep;
 
