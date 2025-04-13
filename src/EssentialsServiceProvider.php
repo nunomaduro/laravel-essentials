@@ -22,6 +22,7 @@ final class EssentialsServiceProvider extends BaseServiceProvider
         Configurables\AutomaticallyEagerLoadRelationships::class,
         Configurables\ForceScheme::class,
         Configurables\ImmutableDates::class,
+        Configurables\PreventStrayRequests::class,
         Configurables\ProhibitDestructiveCommands::class,
         Configurables\SetDefaultPassword::class,
         Configurables\ShouldBeStrict::class,

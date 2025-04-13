@@ -100,7 +100,7 @@ return [
 
 ## Roadmap
 
-- Better defaults before each test case, like: freeze time, prevent HTTP requests, etc.
+- Better defaults before each test case
 - Better Pint configuration by default
 - General cleanup of the skeleton
 - Additional configurables for common Laravel patterns
