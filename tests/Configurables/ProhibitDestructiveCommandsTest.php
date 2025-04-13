@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Console\Migrations\FreshCommand;
 use Illuminate\Support\Facades\DB;
 use NunoMaduro\Essentials\Configurables\ProhibitDestructiveCommands;

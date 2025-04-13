@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Validation\Rules\Password;
 use NunoMaduro\Essentials\Configurables\SetDefaultPassword;
 

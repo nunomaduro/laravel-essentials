@@ -6,7 +6,7 @@ namespace Tests;
 
 use NunoMaduro\Essentials\EssentialsServiceProvider;
 
-class TestCase extends \Orchestra\Testbench\TestCase
+final class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
      * Get the application package providers.

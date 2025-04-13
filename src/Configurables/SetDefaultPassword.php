@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\Essentials\Configurables;
 
 use Illuminate\Validation\Rules\Password;
 use NunoMaduro\Essentials\Contracts\Configurable;
 
-class SetDefaultPassword implements Configurable
+final class SetDefaultPassword implements Configurable
 {
     /**
      * {@inheritDoc}
