@@ -22,6 +22,6 @@ final readonly class ForceScheme implements Configurable
      */
     public function configure(): void
     {
-        URL::forceScheme('https');
+        URL::forceHttps();
     }
 }
