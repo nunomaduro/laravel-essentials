@@ -114,6 +114,40 @@ return [
 ];
 ```
 
+## Commands
+
+You can run the following command to publish opinionated configuration files for the specified tools:
+
+### Composer scripts
+
+Add the following scripts to your `composer.json` file:
+
+```json
+{
+    "refactor": "rector",
+    "lint": "pint",
+    "test:refactor": "rector --dry-run",
+    "test:lint": "pint --test",
+    "test:types": "phpstan analyse --ansi",
+    "test:unit": "pest --colors=always --coverage --parallel",
+    "test": [
+        "@test:refactor",
+        "@test:lint",
+        "@test:types",
+        "@test:unit"
+    ]
+}
+```
+
+```bash
+php artisan essentials:composer {--force} {--backup}
+```
+
+*Options:*
+- `--force` - Overwrites the existing configuration file without asking for confirmation.
+- `--backup` - Creates a backup of the existing configuration file.
+
+
 ## Roadmap
 
 - Better defaults before each test case
