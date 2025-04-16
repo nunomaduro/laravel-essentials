@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\Essentials;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use NunoMaduro\Essentials\Commands\MakeActionCommand;
 use NunoMaduro\Essentials\Contracts\Configurable;
 
 /**
@@ -39,5 +40,15 @@ final class EssentialsServiceProvider extends BaseServiceProvider
             ->map(fn (string $configurable) => $this->app->make($configurable))
             ->filter(fn (Configurable $configurable): bool => $configurable->enabled())
             ->each(fn (Configurable $configurable) => $configurable->configure());
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                MakeActionCommand::class,
+            ]);
+
+            $this->publishes([
+                __DIR__.'/../stubs' => $this->app->basePath('stubs'),
+            ], 'essentials-stubs');
+        }
     }
 }
