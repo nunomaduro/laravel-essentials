@@ -46,6 +46,7 @@ final class EssentialsServiceProvider extends BaseServiceProvider
             $this->commands([
                 EssentialsPintCommand::class,
                 MakeActionCommand::class,
+                Commands\EssentialsRectorCommand::class,
             ]);
 
             $this->publishes([
