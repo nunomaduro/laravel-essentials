@@ -6,6 +6,7 @@ namespace NunoMaduro\Essentials;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use NunoMaduro\Essentials\Commands\PublishPintConfigCommand;
+use NunoMaduro\Essentials\Commands\MakeActionCommand;
 use NunoMaduro\Essentials\Contracts\Configurable;
 
 /**
@@ -21,8 +22,10 @@ final class EssentialsServiceProvider extends BaseServiceProvider
     private array $configurables = [
         Configurables\AggressivePrefetching::class,
         Configurables\AutomaticallyEagerLoadRelationships::class,
+        Configurables\FakeSleep::class,
         Configurables\ForceScheme::class,
         Configurables\ImmutableDates::class,
+        Configurables\PreventStrayRequests::class,
         Configurables\ProhibitDestructiveCommands::class,
         Configurables\SetDefaultPassword::class,
         Configurables\ShouldBeStrict::class,
@@ -42,7 +45,12 @@ final class EssentialsServiceProvider extends BaseServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 PublishPintConfigCommand::class,
+                MakeActionCommand::class,
             ]);
+
+            $this->publishes([
+                __DIR__.'/../stubs' => $this->app->basePath('stubs'),
+            ], 'essentials-stubs');
         }
     }
 }

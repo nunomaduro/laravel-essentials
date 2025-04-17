@@ -41,7 +41,7 @@ Improves how Eloquent handles undefined attributes, lazy loading, and invalid as
 
 ### ⚡️ Auto Eager Loading
 
-Automatically eager loads relationships defined in the model’s `$with` property.
+Automatically eager loads relationships defined in the model's `$with` property.
 
 **Why:** Reduces N+1 query issues and improves performance without needing `with()` everywhere.
 
@@ -49,7 +49,7 @@ Automatically eager loads relationships defined in the model’s `$with` propert
 
 ### 🔓 Optional Unguarded Models
 
-Disables Laravel’s mass assignment protection globally (opt-in).
+Disables Laravel's mass assignment protection globally (opt-in).
 
 **Why:** Useful in trusted or local environments where you want to skip defining `$fillable`.
 
@@ -85,24 +85,58 @@ Configures Laravel Vite to preload assets more aggressively.
 
 **Why:** Improves front-end load times and user experience.
 
-## Configuration
+---
 
-All features are configurable through the `essentials.php` config file. By default, most features are enabled, but you can disable any feature by setting its configuration value to `false`:
+### 🔄 Prevent Stray Requests
 
-```php
-// config/essentials.php
-return [
-    NunoMaduro\Essentials\Configurables\ShouldBeStrict::class => true,
-    NunoMaduro\Essentials\Configurables\Unguard::class => false,
-    // other configurables...
-];
+Configures Laravel Http Facade to prevent stray requests.
+
+**Why:** Ensure every HTTP calls during tests have been explicitly faked.
+
+---
+
+### 😴 Fake Sleep
+
+Configures Laravel Sleep Facade to be faked.
+
+**Why:** Avoid unexpected sleep during testing cases.
+
+### 🏗️ Artisan Commands
+
+#### `make:action`
+
+Quickly generates action classes in your Laravel application:
+
+```bash
+php artisan make:action CreateUserAction
 ```
 
-## Commands
+This creates a clean action class at `app/Actions/CreateUserAction.php`:
 
-You can run the following command to publish opinionated configuration files for the specified tools:
+```php
+<?php
 
-### Laravel Pint
+declare(strict_types=1);
+
+namespace App\Actions;
+
+final readonly class CreateUserAction
+{
+    /**
+     * Execute the action.
+     */
+    public function handle(): void
+    {
+        DB::transaction(function (): void {
+            //
+        });
+    }
+}
+```
+
+Actions help organize business logic in dedicated classes, promoting single responsibility and cleaner controllers.
+
+#### `essentials:pint`
 
 Laravel Pint is included by default in every Laravel project and is a great tool to keep your code clean and consistent. But it is configured very minimally by default. This command will publish a configuration file for Pint that includes the following:
 
@@ -121,10 +155,28 @@ php artisan essentials:pint {--force} {--backup}
 - `--backup` - Creates a backup of the existing configuration file.
 
 
+## Configuration
+
+All features are configurable through the `essentials.php` config file. By default, most features are enabled, but you can disable any feature by setting its configuration value to `false`:
+
+```php
+// config/essentials.php
+return [
+    NunoMaduro\Essentials\Configurables\ShouldBeStrict::class => true,
+    NunoMaduro\Essentials\Configurables\Unguard::class => false,
+    // other configurables...
+];
+```
+
+You may also publish the stubs used by this package:
+
+```bash
+php artisan vendor:publish --tag=essentials-stubs
+```
 
 ## Roadmap
 
-- Better defaults before each test case, like: freeze time, prevent HTTP requests, etc.
+- Better defaults before each test case
 - Better Pint configuration by default
 - General cleanup of the skeleton
 - Additional configurables for common Laravel patterns
