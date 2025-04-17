@@ -37,3 +37,20 @@ it('fails when the action already exists', function (): void {
 
     expect($exitCode)->toBe(1);
 });
+
+it('add suffix "Action" to action name if not provided', function (): void {
+    $actionName = 'CreateUser';
+    $exitCode = Artisan::call('make:action', ['name' => $actionName]);
+
+    expect($exitCode)->toBe(0);
+
+    $expectedPath = app_path('Actions/'.$actionName.'Action.php');
+    expect(File::exists($expectedPath))->toBeTrue();
+
+    $content = File::get($expectedPath);
+
+    expect($content)
+        ->toContain('namespace App\Actions;')
+        ->toContain('class '.$actionName.'Action')
+        ->toContain('public function handle(): void');
+});

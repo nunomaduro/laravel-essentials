@@ -39,12 +39,32 @@ final class MakeActionCommand extends GeneratorCommand
     {
         // First check if the class already exists
         if ($this->alreadyExists($this->getNameInput())) {
-            $this->error($this->type.' already exists!');
+            $this->error($this->type . ' already exists!');
 
             return 1;
         }
 
         return parent::handle();
+    }
+
+    /**
+     * Get the name input.
+     *
+     * @return string
+     */
+    protected function getNameInput(): string
+    {
+        $name = trim($this->argument('name'));
+
+        if (Str::endsWith($name, '.php')) {
+            return Str::substr($name, 0, -4);
+        }
+
+        if (! Str::endsWith($name, 'Action')) {
+            return $name.'Action';
+        }
+
+        return $name;
     }
 
     /**
