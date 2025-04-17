@@ -18,17 +18,3 @@ final readonly class {{ class }}
         });
     }
 }
-
-class CreateUserAction {
-    public function __construct($emailService)
-    {
-        //
-    }
-
-    public functi
-}
-
-    -> CreateTeamActionA
-    -> CreateTeamActionB
-
-
