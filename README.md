@@ -103,7 +103,7 @@ Configures Laravel Sleep Facade to be faked.
 
 ### 🏗️ Artisan Commands
 
-#### make:action
+#### `make:action`
 
 Quickly generates action classes in your Laravel application:
 
@@ -135,6 +135,25 @@ final readonly class CreateUserAction
 ```
 
 Actions help organize business logic in dedicated classes, promoting single responsibility and cleaner controllers.
+
+#### `essentials:pint`
+
+Laravel Pint is included by default in every Laravel project and is a great tool to keep your code clean and consistent. But it is configured very minimally by default. This command will publish a configuration file for Pint that includes the following:
+
+- "declare_strict_types" - Enforces strict types in all files.
+- "final_class" - Enforces final classes by default.
+- "ordered_class_elements" - Orders class elements by visibility and type.
+- "strict_comparison" - Enforces strict comparison in all files.
+- and more...
+
+```bash
+php artisan essentials:pint {--force} {--backup}
+```
+
+*Options:*
+- `--force` - Overwrites the existing configuration file without asking for confirmation.
+- `--backup` - Creates a backup of the existing configuration file.
+
 
 ## Configuration
 
