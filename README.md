@@ -41,7 +41,7 @@ Improves how Eloquent handles undefined attributes, lazy loading, and invalid as
 
 ### ⚡️ Auto Eager Loading
 
-Automatically eager loads relationships defined in the model’s `$with` property.
+Automatically eager loads relationships defined in the model's `$with` property.
 
 **Why:** Reduces N+1 query issues and improves performance without needing `with()` everywhere.
 
@@ -49,7 +49,7 @@ Automatically eager loads relationships defined in the model’s `$with` propert
 
 ### 🔓 Optional Unguarded Models
 
-Disables Laravel’s mass assignment protection globally (opt-in).
+Disables Laravel's mass assignment protection globally (opt-in).
 
 **Why:** Useful in trusted or local environments where you want to skip defining `$fillable`.
 
@@ -101,6 +101,60 @@ Configures Laravel Sleep Facade to be faked.
 
 **Why:** Avoid unexpected sleep during testing cases.
 
+### 🏗️ Artisan Commands
+
+#### `make:action`
+
+Quickly generates action classes in your Laravel application:
+
+```bash
+php artisan make:action CreateUserAction
+```
+
+This creates a clean action class at `app/Actions/CreateUserAction.php`:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Actions;
+
+final readonly class CreateUserAction
+{
+    /**
+     * Execute the action.
+     */
+    public function handle(): void
+    {
+        DB::transaction(function (): void {
+            //
+        });
+    }
+}
+```
+
+Actions help organize business logic in dedicated classes, promoting single responsibility and cleaner controllers.
+
+#### `essentials:pint`
+
+Laravel Pint is included by default in every Laravel project and is a great tool to keep your code clean and consistent. But it is configured very minimally by default. This command will publish a configuration file for Pint that includes the following:
+
+- "declare_strict_types" - Enforces strict types in all files.
+- "final_class" - Enforces final classes by default.
+- "ordered_class_elements" - Orders class elements by visibility and type.
+- "strict_comparison" - Enforces strict comparison in all files.
+- and more...
+
+```bash
+php artisan essentials:pint {--force} {--backup}
+```
+
+*Options:*
+- `--force` - Overwrites the existing configuration file without asking for confirmation.
+- `--backup` - Creates a backup of the existing configuration file.
+
+
 ## Configuration
 
 All features are configurable through the `essentials.php` config file. By default, most features are enabled, but you can disable any feature by setting its configuration value to `false`:
@@ -114,11 +168,7 @@ return [
 ];
 ```
 
-## Commands
-
-You can run the following command to publish opinionated configuration files for the specified tools:
-
-### Composer scripts
+#### `essentials:composer`
 
 Add the following scripts to your `composer.json` file:
 
@@ -147,6 +197,11 @@ php artisan essentials:composer {--force} {--backup}
 - `--force` - Overwrites the existing configuration file without asking for confirmation.
 - `--backup` - Creates a backup of the existing configuration file.
 
+You may also publish the stubs used by this package:
+
+```bash
+php artisan vendor:publish --tag=essentials-stubs
+```
 
 ## Roadmap
 

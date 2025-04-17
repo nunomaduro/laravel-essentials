@@ -6,7 +6,6 @@ namespace NunoMaduro\Essentials;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use NunoMaduro\Essentials\Commands\ConfigureComposerCommand;
 use NunoMaduro\Essentials\Contracts\Configurable;
 
 /**
@@ -38,7 +37,9 @@ final class EssentialsServiceProvider extends BaseServiceProvider
      * @var list<class-string<Command>>
      */
     private array $commands = [
-        ConfigureComposerCommand::class,
+        Commands\ConfigureComposerCommand::class,
+        Commands\EssentialsPintCommand::class,
+        Commands\MakeActionCommand::class,
     ];
 
     /**
@@ -53,6 +54,10 @@ final class EssentialsServiceProvider extends BaseServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands($this->commands);
+
+            $this->publishes([
+                __DIR__.'/../stubs' => $this->app->basePath('stubs'),
+            ], 'essentials-stubs');
         }
     }
 }
