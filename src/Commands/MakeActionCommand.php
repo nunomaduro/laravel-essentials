@@ -48,6 +48,26 @@ final class MakeActionCommand extends GeneratorCommand
     }
 
     /**
+     * Get the name input.
+     *
+     * @return string
+     */
+    protected function getNameInput()
+    {
+        $name = trim($this->argument('name'));
+
+        if (Str::endsWith($name, '.php')) {
+            return Str::substr($name, 0, -4);
+        }
+
+        if(! Str::endsWith($name, 'Action')) {
+            return $name.'Action';
+        }
+
+        return $name;
+    }
+
+    /**
      * Get the stub file for the generator.
      */
     protected function getStub(): string
