@@ -60,7 +60,7 @@ final class MakeActionCommand extends GeneratorCommand
             return Str::substr($name, 0, -4);
         }
 
-        if(! Str::endsWith($name, 'Action')) {
+        if (! Str::endsWith($name, 'Action')) {
             return $name.'Action';
         }
 
