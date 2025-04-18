@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\Essentials;
 
+use Illuminate\Console\Command;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use NunoMaduro\Essentials\Commands\EssentialsPintCommand;
-use NunoMaduro\Essentials\Commands\MakeActionCommand;
 use NunoMaduro\Essentials\Contracts\Configurable;
 
 /**
@@ -42,7 +41,7 @@ final class EssentialsServiceProvider extends BaseServiceProvider
         Commands\EssentialsPintCommand::class,
         Commands\MakeActionCommand::class,
     ];
-    
+
     /**
      * Bootstrap the application services.
      */
