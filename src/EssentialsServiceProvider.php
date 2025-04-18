@@ -33,6 +33,17 @@ final class EssentialsServiceProvider extends BaseServiceProvider
     ];
 
     /**
+     * The list of commands.
+     *
+     * @var list<class-string<Command>>
+     */
+    private array $commandsList = [
+        Commands\EssentialsRectorCommand::class,
+        Commands\EssentialsPintCommand::class,
+        Commands\MakeActionCommand::class,
+    ];
+    
+    /**
      * Bootstrap the application services.
      */
     public function boot(): void
@@ -43,11 +54,7 @@ final class EssentialsServiceProvider extends BaseServiceProvider
             ->each(fn (Configurable $configurable) => $configurable->configure());
 
         if ($this->app->runningInConsole()) {
-            $this->commands([
-                EssentialsPintCommand::class,
-                MakeActionCommand::class,
-                Commands\EssentialsRectorCommand::class,
-            ]);
+            $this->commands($this->commandsList);
 
             $this->publishes([
                 __DIR__.'/../stubs' => $this->app->basePath('stubs'),
