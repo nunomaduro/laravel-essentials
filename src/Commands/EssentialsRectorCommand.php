@@ -15,7 +15,7 @@ final class EssentialsRectorCommand extends Command
      */
     protected $signature = 'essentials:rector
         {--force : Force the operation to run without confirmation}
-        {--backup : Create a backup of existing pint.json}';
+        {--backup : Create a backup of existing rector.php}';
 
     /**
      * The console command description.
