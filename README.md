@@ -154,6 +154,16 @@ php artisan essentials:pint {--force} {--backup}
 - `--force` - Overwrites the existing configuration file without asking for confirmation.
 - `--backup` - Creates a backup of the existing configuration file.
 
+#### `essentials:add-scripts`
+
+Automatically configures your Laravel project with standardized composer scripts for testing, linting, and other development tasks. This command analyzes your project's dependencies and adds appropriate scripts to your `composer.json` file.
+
+```bash
+php artisan essentials:add-scripts {--skip-checks}
+```
+
+*Options:*
+- `--skip-checks` - Bypasses dependency checks and adds all available scripts to your composer.json, even if the required packages aren't installed. This is useful for creating a complete script structure before installing tools or for standardizing scripts across multiple projects.
 
 ## Configuration
 
