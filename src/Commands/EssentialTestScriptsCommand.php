@@ -314,8 +314,8 @@ final class EssentialTestScriptsCommand extends Command
             new ScriptDefinition(
                 name: 'test:types',
                 command: 'phpstan analyse --ansi',
-                package: 'phpstan/phpstan',
-                version: '^2.0',
+                package: 'larastan/larastan',
+                version: '^3.0',
                 description: 'Run static analysis using PHPStan'
             ),
             new ScriptDefinition(
