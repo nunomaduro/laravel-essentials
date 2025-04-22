@@ -126,7 +126,7 @@ it('recommends missing packages', function (): void {
 it('adds multiple package scripts when multiple dependencies are available', function (): void {
     $composerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
     $composerJson['require-dev']['laravel/pint'] = '^1.0';
-    $composerJson['require-dev']['phpstan/phpstan'] = '^2.0';
+    $composerJson['require-dev']['larastan/larastan'] = '^3.0';
     File::put($this->tempDir.'/composer.json', json_encode($composerJson, JSON_PRETTY_PRINT));
 
     $this->artisan('essentials:add-scripts')
@@ -153,7 +153,7 @@ it('preserves existing test scripts when adding new ones', function (): void {
 
     $composerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
     $composerJson['require-dev']['laravel/pint'] = '^1.0';
-    $composerJson['require-dev']['phpstan/phpstan'] = '^2.0';
+    $composerJson['require-dev']['larastan/larastan'] = '^3.0';
     File::put($this->tempDir.'/composer.json', json_encode($composerJson, JSON_PRETTY_PRINT));
 
     $this->artisan('essentials:add-scripts')
@@ -183,7 +183,7 @@ it('maintains the correct order of test scripts based on script definitions', fu
 
     $composerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
     $composerJson['require-dev']['laravel/pint'] = '^1.0';
-    $composerJson['require-dev']['phpstan/phpstan'] = '^2.0';
+    $composerJson['require-dev']['larastan/larastan'] = '^3.0';
     $composerJson['require-dev']['pestphp/pest'] = '^3.0';
     $composerJson['require-dev']['pestphp/pest-plugin-type-coverage'] = '^3.0';
     $composerJson['require-dev']['rector/rector'] = '^2.0';
@@ -243,7 +243,7 @@ it('creates empty test array with only test scripts when no test script exists',
 
     $composerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
     $composerJson['require-dev']['laravel/pint'] = '^1.0';
-    $composerJson['require-dev']['phpstan/phpstan'] = '^2.0';
+    $composerJson['require-dev']['larastan/larastan'] = '^3.0';
     File::put($this->tempDir.'/composer.json', json_encode($composerJson, JSON_PRETTY_PRINT));
 
     $this->artisan('essentials:add-scripts')
