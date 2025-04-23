@@ -262,3 +262,16 @@ it('creates empty test array with only test scripts when no test script exists',
     $typesIndex = array_search('@test:types', $updatedComposerJson['scripts']['test']);
     expect($lintIndex)->toBeLessThan($typesIndex);
 });
+
+it('handles invalid JSON in composer.json file', function (): void {
+    File::put($this->tempDir.'/composer.json', '{invalid json content');
+
+    $this->artisan('essentials:add-scripts')
+        ->assertSuccessful();
+
+    $updatedComposerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
+
+    expect($updatedComposerJson)
+        ->toBeArray()
+        ->and->toHaveKey('scripts');
+});
