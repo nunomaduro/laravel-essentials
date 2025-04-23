@@ -53,6 +53,10 @@ final class EssentialsServiceProvider extends BaseServiceProvider
             $this->publishes([
                 __DIR__.'/../stubs' => $this->app->basePath('stubs'),
             ], 'essentials-stubs');
+
+            $this->publishes([
+                __DIR__.'/../config/essentials.php' => config_path('essentials.php'),
+            ], 'essentials-config');
         }
     }
 }

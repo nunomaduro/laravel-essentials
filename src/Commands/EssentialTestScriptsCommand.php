@@ -6,6 +6,7 @@ namespace NunoMaduro\Essentials\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use NunoMaduro\Essentials\ValueObjects\ScriptDefinition;
 
@@ -320,17 +321,17 @@ final class EssentialTestScriptsCommand extends Command
             ),
             new ScriptDefinition(
                 name: 'test:unit',
-                command: 'pest --colors=always --coverage --parallel',
+                command: 'pest --colors=always --coverage --parallel --min='.$this->getTestCoverageMinimum(),
                 package: 'pestphp/pest',
                 version: '^3.0',
-                description: 'Run unit tests with coverage and parallel execution'
+                description: 'Run unit tests with coverage (minimum '.$this->getTestCoverageMinimum().'%) and parallel execution'
             ),
             new ScriptDefinition(
                 name: 'test:type-coverage',
-                command: 'pest --type-coverage --min=100',
+                command: 'pest --type-coverage --min='.$this->getTypeCoverageMinimum(),
                 package: 'pestphp/pest-plugin-type-coverage',
                 version: '^3.0',
-                description: 'Check type coverage (minimum 100%)'
+                description: 'Check type coverage (minimum '.$this->getTypeCoverageMinimum().'%)'
             ),
         ]);
     }
@@ -374,5 +375,21 @@ final class EssentialTestScriptsCommand extends Command
         $this->newLine();
         $this->line('You can install all missing packages with:');
         $this->components->info($command.implode(' ', $packagesWithVersions));
+    }
+
+    /**
+     * Get the minimum test coverage percentage from config or use minimum_test as fallback
+     */
+    private function getTestCoverageMinimum(): int
+    {
+        return Config::integer('essentials.minimum_test_coverage', Config::integer('essentials.minimum_test', 40));
+    }
+
+    /**
+     * Get the minimum type coverage percentage from config or use minimum_test as fallback
+     */
+    private function getTypeCoverageMinimum(): int
+    {
+        return Config::integer('essentials.minimum_type_coverage', Config::integer('essentials.minimum_test', 100));
     }
 }
