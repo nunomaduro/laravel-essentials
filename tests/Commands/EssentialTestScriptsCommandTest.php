@@ -53,8 +53,7 @@ it('adds only scripts for installed packages', function (): void {
 
     $composerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
 
-    expect($composerJson['scripts'])->toHaveKey('lint')
-        ->and($composerJson['scripts'])->toHaveKey('test:lint')
+    expect($composerJson['scripts'])->toHaveKeys(['lint', 'test:lint'])
         ->and($composerJson['scripts'])->not->toHaveKeys(['refactor', 'test:types', 'test:unit']);
 
     expect($composerJson['scripts'])->toHaveKey('test')
@@ -134,8 +133,7 @@ it('adds multiple package scripts when multiple dependencies are available', fun
 
     $updatedComposerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
 
-    expect($updatedComposerJson['scripts'])->toHaveKey('lint')
-        ->and($updatedComposerJson['scripts'])->toHaveKeys(['test:lint', 'test:types'])
+    expect($updatedComposerJson['scripts'])->toHaveKeys(['lint', 'test:lint', 'test:types'])
         ->and($updatedComposerJson['scripts'])->not->toHaveKey('test:unit');
 
     expect($updatedComposerJson['scripts']['test'])->toContain('@test:lint')
@@ -271,7 +269,6 @@ it('handles invalid JSON in composer.json file', function (): void {
 
     $updatedComposerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
 
-    expect($updatedComposerJson)
-        ->toBeArray()
-        ->and->toHaveKey('scripts');
+    expect($updatedComposerJson)->toBeArray()
+        ->and($updatedComposerJson)->toHaveKey('scripts');
 });
