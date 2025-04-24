@@ -31,3 +31,13 @@ it('can be disabled via configuration', function (): void {
 
     expect($eagerLoad->enabled())->toBeFalse();
 });
+
+it('does nothing when automaticallyEagerLoadRelationships method does not exist', function (): void {
+    final class TestModel {}
+
+    $eagerLoad = new AutomaticallyEagerLoadRelationships(TestModel::class);
+    $eagerLoad->configure();
+
+    // Enabled by default
+    expect($eagerLoad->enabled())->toBeTrue();
+});
