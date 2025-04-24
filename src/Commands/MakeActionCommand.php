@@ -55,17 +55,11 @@ final class MakeActionCommand extends GeneratorCommand
         /** @var string $name */
         $name = $this->argument('name');
 
-        $name = mb_trim($name);
-
-        if (Str::endsWith($name, '.php')) {
-            return Str::substr($name, 0, -4);
-        }
-
-        if (! Str::endsWith($name, 'Action')) {
-            return $name.'Action';
-        }
-
-        return $name;
+        return Str::of(mb_trim($name))
+            ->replaceEnd('.php', '')
+            ->replaceEnd('Action', '')
+            ->append('Action')
+            ->toString();
     }
 
     /**
