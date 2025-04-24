@@ -9,6 +9,10 @@ use NunoMaduro\Essentials\Contracts\Configurable;
 
 final readonly class AutomaticallyEagerLoadRelationships implements Configurable
 {
+    public function __construct(
+        private string $modelClass = Model::class
+    ) {}
+
     /**
      * Whether the configurable is enabled or not.
      */
@@ -22,8 +26,7 @@ final readonly class AutomaticallyEagerLoadRelationships implements Configurable
      */
     public function configure(): void
     {
-        // @phpstan-ignore-next-line
-        if (! method_exists(Model::class, 'automaticallyEagerLoadRelationships')) {
+        if (! method_exists($this->modelClass, 'automaticallyEagerLoadRelationships')) {
             return;
         }
 
