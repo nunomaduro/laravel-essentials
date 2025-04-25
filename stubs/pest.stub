@@ -1,0 +1,28 @@
+/*
+|--------------------------------------------------------------------------
+| Essentials
+|--------------------------------------------------------------------------
+|
+| This configuration enhances your test suite with reliability features that
+| prevent common testing issues. By controlling randomness, time, and external
+| connections, these settings ensure your tests run consistently and predictably
+| across environments, preventing flaky tests and improving debugging efficiency.
+|
+| These defaults make tests faster, more isolated, and more deterministic without
+| requiring manual configuration for each test case in your application.
+|
+*/
+
+use Illuminate\Support\Sleep;
+
+pest()->extend(Tests\TestCase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->beforeEach(function () {
+        Str::createRandomStringsNormally();
+        Str::createUuidsNormally();
+        Http::preventStrayRequests();
+        Sleep::fake();
+
+        $this->freezeTime();
+    })
+    ->in('Feature', 'Unit');

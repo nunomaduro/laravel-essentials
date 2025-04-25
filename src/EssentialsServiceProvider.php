@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\Essentials;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use NunoMaduro\Essentials\Commands\EssentialsPestCommand;
 use NunoMaduro\Essentials\Commands\EssentialsPintCommand;
 use NunoMaduro\Essentials\Commands\MakeActionCommand;
 use NunoMaduro\Essentials\Contracts\Configurable;
@@ -44,6 +45,7 @@ final class EssentialsServiceProvider extends BaseServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
+                EssentialsPestCommand::class,
                 EssentialsPintCommand::class,
                 MakeActionCommand::class,
             ]);
