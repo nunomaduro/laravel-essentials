@@ -17,7 +17,7 @@ use Illuminate\Support\Sleep;
 
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->beforeEach(function () {
+    ->beforeEach(function (): void {
         Str::createRandomStringsNormally();
         Str::createUuidsNormally();
         Http::preventStrayRequests();
