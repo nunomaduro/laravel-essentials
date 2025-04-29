@@ -12,7 +12,9 @@ use NunoMaduro\Essentials\ValueObjects\ScriptDefinition;
 
 final class EssentialTestScriptsCommand extends Command
 {
-    protected $signature = 'essentials:add-scripts {--skip-checks : Skip dependency checks}';
+    protected $signature = 'essentials:add-scripts 
+        {--skip-checks : Skip dependency checks}
+        {--existing-test-commands=ask : How to handle existing test commands [ask|keep|remove]}';
 
     protected $description = 'Add useful development scripts to composer.json';
 
@@ -167,9 +169,17 @@ final class EssentialTestScriptsCommand extends Command
         /** @var array<int, string>|string|null $existingTestScript */
         $existingTestScript = $scripts['test'] ?? null;
 
-        [$customScripts, $existingTestScripts] = $this->separateScripts($existingTestScript);
+        $customScripts = $this->normalizeTestScripts($existingTestScript);
+
+        /** @var array<int, string> $validTestCommands */
+        $validTestCommands = $this->getScriptDefinitions()
+            ->filter(fn (ScriptDefinition $script): bool => str_starts_with($script->name, 'test:'))
+            ->map(fn (ScriptDefinition $script): string => '@'.$script->name)
+            ->toArray();
+
+        $scriptsToKeep = $this->getScriptsToKeep($customScripts, $validTestCommands);
         $orderedTestScripts = $this->getOrderedTestScripts($requires, $skipChecks);
-        $resultScripts = $this->combineScripts($customScripts, $orderedTestScripts);
+        $resultScripts = $this->combineScripts($scriptsToKeep, $orderedTestScripts);
 
         if ($resultScripts !== []) {
             $scripts['test'] = $resultScripts;
@@ -179,31 +189,54 @@ final class EssentialTestScriptsCommand extends Command
     }
 
     /**
-     * Separate custom scripts from test scripts
+     * Get scripts to keep after user confirmation
      *
-     * @param  array<int, string>|string|null  $existingTestScript
-     * @return array{0: array<int, string>, 1: array<int, string>}
+     * @param  array<int, string>  $customScripts
+     * @param  array<int, string>  $validTestCommands
+     * @return array<int, string>
      */
-    private function separateScripts(mixed $existingTestScript): array
+    private function getScriptsToKeep(array $customScripts, array $validTestCommands): array
     {
-        $customScripts = [];
-        $existingTestScripts = [];
+        /** @var string $existingOption */
+        $existingOption = $this->option('existing-test-commands');
+        $scriptsToKeep = [];
 
-        if ($existingTestScript !== null) {
-            if (! is_array($existingTestScript)) {
-                $existingTestScript = [$existingTestScript];
-            }
+        foreach ($customScripts as $script) {
+            if (! in_array($script, $validTestCommands, true)) {
+                $shouldKeep = match ($existingOption) {
+                    'keep' => true,
+                    'remove' => false,
+                    default => $this->confirm("The script '{$script}' in the 'test' section is not defined in essential scripts. Would you like to keep it?"),
+                };
 
-            foreach ($existingTestScript as $script) {
-                if (str_starts_with($script, '@test:')) {
-                    $existingTestScripts[] = $script;
-                } else {
-                    $customScripts[] = $script;
+                if ($shouldKeep) {
+                    $scriptsToKeep[] = $script;
                 }
+            } else {
+                $scriptsToKeep[] = $script;
             }
         }
 
-        return [$customScripts, $existingTestScripts];
+        return $scriptsToKeep;
+    }
+
+    /**
+     * Normalize test scripts to array
+     *
+     * @param  array<int, string>|string|null  $existingTestScript
+     * @return array<int, string>
+     */
+    private function normalizeTestScripts(mixed $existingTestScript): array
+    {
+        if ($existingTestScript === null) {
+            return [];
+        }
+
+        if (! is_array($existingTestScript)) {
+            return [(string) $existingTestScript];
+        }
+
+        return $existingTestScript;
     }
 
     /**
@@ -237,15 +270,11 @@ final class EssentialTestScriptsCommand extends Command
      */
     private function combineScripts(array $customScripts, array $orderedTestScripts): array
     {
-        $resultScripts = $customScripts;
-
-        foreach ($orderedTestScripts as $script) {
-            if (! in_array($script, $resultScripts, true)) {
-                $resultScripts[] = $script;
-            }
-        }
-
-        return $resultScripts;
+        return collect($customScripts)
+            ->reject(fn (string $script): bool => in_array($script, $orderedTestScripts, true))
+            ->merge($orderedTestScripts)
+            ->values()
+            ->all();
     }
 
     /**

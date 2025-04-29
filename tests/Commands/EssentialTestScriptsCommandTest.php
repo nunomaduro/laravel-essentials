@@ -154,7 +154,7 @@ it('preserves existing test scripts when adding new ones', function (): void {
     $composerJson['require-dev']['larastan/larastan'] = '^3.0';
     File::put($this->tempDir.'/composer.json', json_encode($composerJson, JSON_PRETTY_PRINT));
 
-    $this->artisan('essentials:add-scripts')
+    $this->artisan('essentials:add-scripts', ['--existing-test-commands' => 'keep'])
         ->assertSuccessful();
 
     $updatedComposerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
@@ -188,7 +188,7 @@ it('maintains the correct order of test scripts based on script definitions', fu
     $composerJson['require-dev']['peckphp/peck'] = '^0.1';
     File::put($this->tempDir.'/composer.json', json_encode($composerJson, JSON_PRETTY_PRINT));
 
-    $this->artisan('essentials:add-scripts')
+    $this->artisan('essentials:add-scripts', ['--existing-test-commands' => 'keep'])
         ->assertSuccessful();
 
     $updatedComposerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
@@ -220,7 +220,7 @@ it('handles a string test script and converts it to an array', function (): void
     $composerJson['require-dev']['laravel/pint'] = '^1.0';
     File::put($this->tempDir.'/composer.json', json_encode($composerJson, JSON_PRETTY_PRINT));
 
-    $this->artisan('essentials:add-scripts')
+    $this->artisan('essentials:add-scripts', ['--existing-test-commands' => 'keep'])
         ->assertSuccessful();
 
     $updatedComposerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
@@ -271,4 +271,71 @@ it('handles invalid JSON in composer.json file', function (): void {
 
     expect($updatedComposerJson)->toBeArray()
         ->and($updatedComposerJson)->toHaveKey('scripts');
+});
+
+it('removes existing test scripts when --existing-test-commands=remove is used', function (): void {
+    $composerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
+    $composerJson['scripts']['test'] = [
+        '@php artisan config:clear --ansi',
+        'echo "Hello world, this should NOT be preserved"',
+        '@custom:test',
+    ];
+    File::put($this->tempDir.'/composer.json', json_encode($composerJson, JSON_PRETTY_PRINT));
+
+    $composerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
+    $composerJson['require-dev']['laravel/pint'] = '^1.0';
+    $composerJson['require-dev']['larastan/larastan'] = '^3.0';
+    File::put($this->tempDir.'/composer.json', json_encode($composerJson, JSON_PRETTY_PRINT));
+
+    $this->artisan('essentials:add-scripts', ['--existing-test-commands' => 'remove'])
+        ->assertSuccessful();
+
+    $updatedComposerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
+
+    expect($updatedComposerJson['scripts']['test'])->not->toContain(
+        '@php artisan config:clear --ansi',
+        'echo "Hello world, this should NOT be preserved"',
+        '@custom:test'
+    );
+
+    expect($updatedComposerJson['scripts']['test'])->toContain(
+        '@test:lint',
+        '@test:types'
+    );
+});
+
+it('prompts for confirmation when --existing-test-commands=ask is used', function (): void {
+    $composerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
+    $composerJson['scripts']['test'] = [
+        '@php artisan config:clear --ansi',
+        'echo "Custom script that should be confirmed"',
+        '@test:lint', // This is already a valid test command
+    ];
+
+    // Add a test dependency
+    $composerJson['require-dev']['laravel/pint'] = '^1.0';
+
+    File::put($this->tempDir.'/composer.json', json_encode($composerJson, JSON_PRETTY_PRINT));
+
+    // Simulate a user confirming to keep the first script and rejecting the second
+    $this->artisan('essentials:add-scripts', ['--existing-test-commands' => 'ask'])
+        ->expectsConfirmation("The script '@php artisan config:clear --ansi' in the 'test' section is not defined in essential scripts. Would you like to keep it?", 'yes')
+        ->expectsConfirmation("The script 'echo \"Custom script that should be confirmed\"' in the 'test' section is not defined in essential scripts. Would you like to keep it?", 'no')
+        ->assertSuccessful();
+
+    $updatedComposerJson = json_decode(File::get($this->tempDir.'/composer.json'), true);
+
+    // First script should be kept
+    expect($updatedComposerJson['scripts']['test'])->toContain('@php artisan config:clear --ansi');
+
+    // Second script should be removed
+    expect($updatedComposerJson['scripts']['test'])->not->toContain('echo "Custom script that should be confirmed"');
+
+    // Official scripts should be there and in the right order
+    expect($updatedComposerJson['scripts']['test'])->toContain('@test:lint');
+
+    // The first script should come before the official script (preserving order)
+    $artisanIndex = array_search('@php artisan config:clear --ansi', $updatedComposerJson['scripts']['test']);
+    $lintIndex = array_search('@test:lint', $updatedComposerJson['scripts']['test']);
+    expect($artisanIndex)->toBeLessThan($lintIndex);
 });
