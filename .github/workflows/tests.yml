@@ -12,7 +12,12 @@ jobs:
         php: ['8.3', '8.4']
         laravel: [11.44.2, '12.8.1']
         dependency-version: [prefer-lowest, prefer-stable]
-
+        include:
+         - laravel: 12.8.1
+           testbench: 10.*
+         - laravel: 11.44.2
+           testbench: 9.*
+           
     name: Tests P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
 
     steps:
@@ -40,18 +45,10 @@ jobs:
         restore-keys: dependencies-php-${{ matrix.php }}-os-${{ matrix.os }}-version-${{ matrix.dependency-version }}-composer-
 
     - name: Install Composer dependencies
-      run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
-
-    - name: Require Testbench v9 for Laravel 11
-      if: startsWith(matrix.laravel, '11')
-      run: composer require --dev orchestra/testbench:^9.0 --no-interaction --with-all-dependencies
-
-    - name: Require Testbench v10 for Laravel 12
-      if: startsWith(matrix.laravel, '12')
-      run: composer require --dev orchestra/testbench:^10.0 --no-interaction --with-all-dependencies
-
-    - name: Install Laravel
-      run: composer require laravel/framework:${{ matrix.laravel }} --with-all-dependencies --no-interaction --prefer-dist
+      run: |
+        composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+        composer require --dev "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+        composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction 
 
     - name: Integration Tests
       run: php ./vendor/bin/pest
