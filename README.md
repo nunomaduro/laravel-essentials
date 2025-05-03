@@ -159,6 +159,19 @@ php artisan essentials:pint {--force} {--backup}
 - `--force` - Overwrites the existing configuration file without asking for confirmation.
 - `--backup` - Creates a backup of the existing configuration file.
 
+#### `essentials:pest`
+
+Adds opinionated defaults to your Pest configuration. The command ensures your tests are more reliable and predictable by:
+
+- Preventing stray HTTP requests
+- Normalizing string and UUID generation
+- Faking sleep operations
+- Freezing time during tests
+- Configuring test paths for Feature and Unit tests
+
+```bash
+php artisan essentials:pest
+```
 
 ## Configuration
 
