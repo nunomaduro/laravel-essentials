@@ -108,7 +108,7 @@ it('fails gracefully when composer json is not found', function (): void {
             ->expectsOutput('composer.json not found in the current directory.');
     } finally {
         if (is_dir($emptyDir)) {
-            rmdir($emptyDir);
+            File::deleteDirectory($emptyDir);
         }
     }
 });
