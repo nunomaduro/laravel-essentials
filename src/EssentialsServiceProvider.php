@@ -6,6 +6,7 @@ namespace NunoMaduro\Essentials;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use NunoMaduro\Essentials\Commands\EssentialsPintCommand;
+use NunoMaduro\Essentials\Commands\EssentialTestScriptsCommand;
 use NunoMaduro\Essentials\Commands\MakeActionCommand;
 use NunoMaduro\Essentials\Contracts\Configurable;
 
@@ -45,12 +46,17 @@ final class EssentialsServiceProvider extends BaseServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 EssentialsPintCommand::class,
+                EssentialTestScriptsCommand::class,
                 MakeActionCommand::class,
             ]);
 
             $this->publishes([
                 __DIR__.'/../stubs' => $this->app->basePath('stubs'),
             ], 'essentials-stubs');
+
+            $this->publishes([
+                __DIR__.'/../config/essentials.php' => config_path('essentials.php'),
+            ], 'essentials-config');
         }
     }
 }
