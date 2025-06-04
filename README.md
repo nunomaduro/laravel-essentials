@@ -32,7 +32,6 @@ composer require nunomaduro/essentials:@dev
 
 All features are optional and configurable in `config/essentials.php`.
 
-// create a table of contents:
 ## Table of Contents
 - [Strict Models](#-strict-models)
 - [Auto Eager Loading](#-auto-eager-loading)
