@@ -14,7 +14,7 @@
     <a href="https://packagist.org/packages/nunomaduro/essentials"><img src="https://img.shields.io/packagist/l/nunomaduro/essentials" alt="License"></a>
 </p>
 
-Essentials provides **better defaults** for your Laravel applications including: strict models, automatically eager loaded relationships, immutable dates, and more! 
+Essentials provide **better defaults** for your Laravel applications including strict models, automatically eagerly loaded relationships, immutable dates, and more! 
 
 > **Requires [PHP 8.3+](https://php.net/releases/)**, **[Laravel 11+](https://laravel.com/docs/11.x/)**.
 
@@ -31,6 +31,22 @@ composer require nunomaduro/essentials:@dev
 ## Features
 
 All features are optional and configurable in `config/essentials.php`.
+
+// create a table of contents:
+## Table of Contents
+- [Strict Models](#-strict-models)
+- [Auto Eager Loading](#-auto-eager-loading)
+- [Optional Unguarded Models](#-optional-unguarded-models)
+- [Immutable Dates](#-immutable-dates)
+- [Force HTTPS](#-force-https)
+- [Safe Console](#-safe-console)
+- [Asset Prefetching](#-asset-prefetching)
+- [Prevent Stray Requests](#-prevent-stray-requests)
+- [Fake Sleep](#-fake-sleep)
+- [Artisan Commands](#-artisan-commands)
+  - [make:action](#makeaction)
+  - [essentials:pint](#essentialspint)
+  - [essentials:rector](#essentialsrector)
 
 ### ✅ Strict Models
 
