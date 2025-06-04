@@ -25,7 +25,7 @@ Essentials provide **better defaults** for your Laravel applications including s
 ⚡️ Get started by requiring the package using [Composer](https://getcomposer.org):
 
 ```bash
-composer require nunomaduro/essentials:@dev
+composer require nunomaduro/essentials:^0.1
 ```
 
 ## Features
