@@ -22,6 +22,6 @@ final readonly class ShouldBeStrict implements Configurable
      */
     public function configure(): void
     {
-        Model::shouldBeStrict();
+        Model::shouldBeStrict(app()->isLocal());
     }
 }
