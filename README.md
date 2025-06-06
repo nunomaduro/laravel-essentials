@@ -200,7 +200,7 @@ php artisan essentials:rector {--force} {--backup}
 
 - Maximum analysis level (`level: max`)
 - Includes common Laravel directories: `app`, `config`, `database`, `routes`, `tests`
-- Sensible defaults for Laravel projects
+- Sensible defaults for Laravel projects with [nunomaduro/larastan](https://github.com/nunomaduro/larastan)
 
 ```bash
 php artisan essentials:phpstan {--force} {--backup}
