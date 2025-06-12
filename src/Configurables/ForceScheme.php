@@ -37,6 +37,6 @@ final readonly class ForceScheme implements Configurable
         /** @var array<int, string> $environments */
         $environments = config()->array('essentials.environments.'.self::class, ['production']);
 
-        return array_map(fn ($environment): string => $environment, $environments);
+        return $environments;
     }
 }
