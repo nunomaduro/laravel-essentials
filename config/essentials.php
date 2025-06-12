@@ -62,7 +62,7 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\ForceScheme::class => false,
+    NunoMaduro\Essentials\Configurables\ForceScheme::class => true,
 
     /*
     |--------------------------------------------------------------------------
