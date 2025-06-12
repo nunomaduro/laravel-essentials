@@ -62,7 +62,20 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\ForceScheme::class => true,
+    NunoMaduro\Essentials\Configurables\ForceScheme::class => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Per-environment overrides
+    |--------------------------------------------------------------------------
+    |
+    | Specify environments for which each configurable should be active.
+    |
+    */
+
+    'environments' => [
+        NunoMaduro\Essentials\Configurables\ForceScheme::class => ['production'],
+    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -22,6 +22,21 @@ final readonly class ForceScheme implements Configurable
      */
     public function configure(): void
     {
-        URL::forceHttps();
+        if (app()->environment(...$this->environments())) {
+            URL::forceScheme('https');
+        }
+    }
+
+    /**
+     * The environments the configurable should be set for.
+     *
+     * @return array<string>
+     */
+    private function environments(): array
+    {
+        /** @var array<int, string> $environments */
+        $environments = config()->array('essentials.environments.'.self::class, ['production']);
+
+        return array_map(fn ($environment): string => $environment, $environments);
     }
 }
