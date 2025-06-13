@@ -66,6 +66,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Per-environment overrides
+    |--------------------------------------------------------------------------
+    |
+    | Specify environments for which each configurable should be active.
+    |
+    */
+
+    'environments' => [
+        NunoMaduro\Essentials\Configurables\ForceScheme::class => ['production'],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Immutable Carbon Dates
     |--------------------------------------------------------------------------
     |

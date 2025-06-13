@@ -31,3 +31,11 @@ it('can be disabled via configuration', function (): void {
 
     expect($forceScheme->enabled())->toBeFalse();
 });
+
+it('environments to be forced can be set via configuration', function (): void {
+    config()->set('essentials.environments.'.ForceScheme::class, ['local', 'testing']);
+
+    $forceScheme = new ForceScheme;
+
+    expect($forceScheme->enabled())->toBeFalse();
+});
