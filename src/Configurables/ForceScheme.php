@@ -14,7 +14,8 @@ final readonly class ForceScheme implements Configurable
      */
     public function enabled(): bool
     {
-        return config()->boolean(sprintf('essentials.%s', self::class), true);
+        return app()->environment(...$this->environments())
+            && config()->boolean(sprintf('essentials.%s', self::class), true);
     }
 
     /**
@@ -22,9 +23,7 @@ final readonly class ForceScheme implements Configurable
      */
     public function configure(): void
     {
-        if (app()->environment(...$this->environments())) {
-            URL::forceHttps();
-        }
+        URL::forceHttps();
     }
 
     /**
@@ -35,7 +34,7 @@ final readonly class ForceScheme implements Configurable
     private function environments(): array
     {
         /** @var array<int, string> $environments */
-        $environments = config()->array('essentials.environments.'.self::class, ['production']);
+        $environments = config()->array(sprintf('essentials.environments.%s', self::class), ['production']);
 
         return $environments;
     }

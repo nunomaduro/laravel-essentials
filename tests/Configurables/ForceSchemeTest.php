@@ -36,11 +36,6 @@ it('environments to be forced can be set via configuration', function (): void {
     config()->set('essentials.environments.'.ForceScheme::class, ['local', 'testing']);
 
     $forceScheme = new ForceScheme;
-    $forceScheme->configure();
 
-    $url = URL::to('/test');
-
-    expect($url)->toStartWith('http://')
-        ->and(app()->environment())->toBe('production');
-
+    expect($forceScheme->enabled())->toBeFalse();
 });
